@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>CS Wiki — Elite Players 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --panel-color: #151921;
+            --accent-color: #00d4ff;
+            --text-main: #f0f0f0;
+            --text-dim: #8892b0;
+            --gold: #ffd700;
+            --active: #00ff88;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; display: flex;
+        }
+
+        nav {
+            width: 70px; background-color: var(--panel-color); height: 100vh;
+            border-right: 2px solid var(--accent-color);
+            transition: width 0.4s; position: fixed; z-index: 100; display: flex; flex-direction: column; align-items: center;
+        }
+        nav:hover { width: 220px; }
+        .nav-label { writing-mode: vertical-rl; text-orientation: mixed; color: var(--accent-color); margin: 30px auto; font-family: 'Syncopate'; font-weight: bold; letter-spacing: 5px; }
+        nav:hover .nav-label { writing-mode: horizontal-tb; }
+        nav ul { list-style: none; padding: 0; width: 100%; opacity: 0; transition: 0.3s; }
+        nav:hover ul { opacity: 1; }
+        nav a { color: var(--text-dim); text-decoration: none; font-family: 'Syncopate'; font-size: 0.7rem; display: block; padding: 20px 0; text-align: center; transition: 0.4s; }
+        nav a:hover { color: #fff; background: rgba(0, 212, 255, 0.1); letter-spacing: 5px; }
+
+        main { margin-left: 70px; padding: 40px; flex-grow: 1; }
+        .header-area { margin-bottom: 50px; }
+        .header-area h1 { font-family: 'Syncopate'; font-size: 2.2rem; margin: 0; }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 25px;
+        }
+
+        /* Базовая карточка */
+        .player-card {
+            background: var(--panel-color);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            /* Изначально скрыты для анимации */
+            opacity: 0; 
+            animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            display: flex;
+            flex-direction: column;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* --- Стили Команд --- */
+        .team-vitality { border-left: 4px solid #ffff00; }
+        .team-vitality:hover { box-shadow: 0 0 20px rgba(255, 255, 0, 0.15); }
+        .team-vitality .team-name { color: #ffff00; }
+
+        .team-falcons { border-left: 4px solid #00ff88; }
+        .team-falcons:hover { box-shadow: 0 0 20px rgba(0, 255, 136, 0.15); }
+        .team-falcons .team-name { color: #00ff88; }
+
+        .team-bcgame { border-left: 4px solid #39ff14; }
+        .team-bcgame:hover { box-shadow: 0 0 20px rgba(57, 255, 20, 0.15); }
+        .team-bcgame .team-name { color: #39ff14; }
+
+        .team-spirit { border-left: 4px solid #ffffff; }
+        .team-spirit:hover { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+
+        .team-navi { border-left: 4px solid #fbff00; }
+        .team-navi:hover { box-shadow: 0 0 20px rgba(251, 255, 0, 0.15); }
+        .team-navi .team-name { color: #fbff00; }
+
+        .team-faze { border-left: 4px solid #ff3e3e; }
+        .team-faze:hover { box-shadow: 0 0 20px rgba(255, 62, 62, 0.15); }
+        .team-faze .team-name { color: #ff3e3e; }
+
+        .team-liquid { border-left: 4px solid #00d4ff; }
+        .team-liquid:hover { box-shadow: 0 0 20px rgba(0, 212, 255, 0.15); }
+        .team-liquid .team-name { color: #00d4ff; }
+
+        /* Внутренние элементы */
+        .card-header {
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .nickname { font-family: 'Syncopate'; font-size: 1.3rem; color: #fff; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+        .active-dot { background: var(--active); box-shadow: 0 0 10px var(--active); }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            padding: 20px;
+            gap: 15px;
+        }
+        .stat-box { display: flex; flex-direction: column; }
+        .s-label { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
+        .s-value { font-size: 1.2rem; font-weight: 700; color: #fff; }
+
+        .info-section { 
+            padding: 0 20px 20px; 
+            font-size: 0.85rem; 
+            line-height: 1.4; 
+            color: var(--text-dim); 
+            flex-grow: 1;
+        }
+        .info-section strong { color: #fff; opacity: 0.9; }
+
+        .wiki-link {
+            display: block; text-align: center; padding: 12px;
+            background: rgba(255,255,255,0.03); color: var(--text-dim);
+            text-decoration: none; font-family: 'Syncopate'; font-size: 0.65rem;
+            transition: 0.3s; border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .wiki-link:hover { background: #fff; color: #000; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-label">SYSTEM</div>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="teams.html">TEAMS</a></li>
+            <li><a href="majors.html">MAJORS</a></li>
+            <li><a href="players.html">PLAYERS</a></li>
+            <li><a href="records.html">RECORDS</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="header-area">
+            <h1>ELITE // <span style="color:var(--accent-color)">PLAYERS</span></h1>
+            <p style="color:var(--text-dim)">GLOBAL DATABASE 2026 // HLTV STATS INTEGRATED</p>
+        </div>
+
+        <div class="players-grid" id="playersGrid">
+            
+            <div class="player-card team-vitality">
+                <div class="card-header">
+                    <div><span class="nickname">ZywOo</span> <span class="fi fi-fr"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.42</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value" style="color:var(--gold)">30</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Vitality</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">AWP</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Лучший игрок планеты. Французский гений, который делает разницу в любой ситуации.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/ZywOo" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-falcons">
+                <div class="card-header">
+                    <div><span class="nickname">m0NESY</span> <span class="fi fi-ru"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.28</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">10</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Falcons</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">AWP</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Самый молниеносный снайпер поколения. Забирает трофеи, пока остальные учатся.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/M0NESY" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-bcgame">
+                <div class="card-header">
+                    <div><span class="nickname">s1mple</span> <span class="fi fi-ua"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.23</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">21</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">BC.Game</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">Hybrid</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Бог и GOAT. Тот, кто изобрёл современный CS. Его форма остается легендарной.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/S1mple" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-spirit">
+                <div class="card-header">
+                    <div><span class="nickname">donk</span> <span class="fi fi-ru"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.41</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">10</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Spirit</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">Rifler</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Ходячая атомная бомба. Монстр, который врывается в тир-1 с запредельным рейтингом.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/Donk_(%D0%BA%D0%B8%D0%B1%D0%B5%D1%80%D1%81%D0%BF%D0%BE%D1%80%D1%82%D1%81%D0%BC%D0%B5%D0%BD)" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-falcons">
+                <div class="card-header">
+                    <div><span class="nickname">NiKo</span> <span class="fi fi-ba"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.15</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">10</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Falcons</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">Rifler</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Человек-винтовка. Лучший фрайгер в истории игры, которому не нужна AWP.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/NiKo" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-vitality">
+                <div class="card-header">
+                    <div><span class="nickname">ropz</span> <span class="fi fi-ee"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.08</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">5</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Vitality</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">Lurker</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Эстонский киллер. Идеальный пример самого эффективного чистильщика в мире.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/Ropz" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-spirit">
+                <div class="card-header">
+                    <div><span class="nickname">sh1ro</span> <span class="fi fi-ru"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.24</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">4</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">Spirit</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">AWP</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Последний герой СНГ. Стабильный снайпер, который делает результат без шума.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/Sh1ro" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+            <div class="player-card team-navi">
+                <div class="card-header">
+                    <div><span class="nickname">b1t</span> <span class="fi fi-ua"></span></div>
+                    <span><span class="status-dot active-dot"></span> <small>ACTIVE</small></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><span class="s-label">Rating 3.0</span><span class="s-value">1.13</span></div>
+                    <div class="stat-box"><span class="s-label">MVP Medals</span><span class="s-value">1</span></div>
+                    <div class="stat-box"><span class="s-label">Team</span><span class="s-value team-name">NAVI</span></div>
+                    <div class="stat-box"><span class="s-label">Position</span><span class="s-value">Rifler</span></div>
+                </div>
+                <div class="info-section">
+                    <strong>Состояние:</strong> Киборг из NAVI. Украинский терминатор, который просто ставит хедшоты.
+                </div>
+                <a href="https://ru.wikipedia.org/wiki/B1t" target="_blank" class="wiki-link">WIKIPEDIA PROFILE</a>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // Скрипт для автоматического добавления задержки каждой карточке
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.player-card');
+            cards.forEach((card, index) => {
+                // Каждая следующая карточка появляется на 0.2 сек позже предыдущей
+                card.style.animationDelay = `${index * 0.15}s`;
+            });
+        });
+    </script>
+</body>
+</html>

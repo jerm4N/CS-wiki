@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>CS Wiki — Teams Database 2026</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --panel-color: #151921;
+            --accent-color: #00d4ff;
+            --text-main: #f0f0f0;
+            --text-dim: #8892b0;
+            --gold: #ffd700;
+        }
+
+        @keyframes systemInit {
+            0% { opacity: 0; transform: translateY(20px); filter: blur(10px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0; display: flex;
+            overflow-x: hidden;
+        }
+
+        nav {
+            width: 70px; background-color: var(--panel-color); height: 100vh;
+            border-right: 2px solid var(--accent-color);
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed; z-index: 100; display: flex; flex-direction: column; align-items: center;
+        }
+        nav:hover { width: 240px; }
+        .nav-label { writing-mode: vertical-rl; text-orientation: mixed; color: var(--accent-color); margin: 30px auto; font-family: 'Orbitron'; font-weight: bold; letter-spacing: 5px; transition: 0.3s; }
+        nav:hover .nav-label { writing-mode: horizontal-tb; letter-spacing: 10px; }
+        
+        nav ul { list-style: none; padding: 0; width: 100%; opacity: 0; transition: 0.3s; }
+        nav:hover ul { opacity: 1; }
+        
+        nav a { color: var(--text-dim); text-decoration: none; font-family: 'Orbitron'; font-size: 0.7rem; display: block; padding: 20px 0; text-align: center; transition: all 0.4s ease; }
+        nav a:hover { color: #fff; background: rgba(0, 212, 255, 0.1); letter-spacing: 5px; padding-left: 20px; }
+
+        main { margin-left: 70px; padding: 60px; flex-grow: 1; }
+
+        .team-card {
+            background: var(--panel-color); border: 1px solid #2d333b;
+            border-radius: 4px; margin-bottom: 12px;
+            overflow: hidden; max-width: 1100px; position: relative;
+            transition: 0.3s;
+            opacity: 0; 
+            animation: systemInit 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        .team-card:hover { border-color: var(--accent-color); transform: translateX(10px); }
+
+        .team-header { padding: 22px; display: flex; justify-content: space-between; align-items: center; font-family: 'Orbitron'; cursor: pointer; }
+        .header-left { display: flex; align-items: center; }
+
+        .team-logo { 
+            width: 42px; height: 42px; margin-right: 20px; object-fit: contain; 
+            transition: 0.3s ease; filter: drop-shadow(0 0 2px rgba(0, 212, 255, 0.2));
+        }
+        .header-left a:hover .team-logo { 
+            transform: scale(1.2); 
+            filter: drop-shadow(0 0 8px var(--accent-color)); 
+        }
+
+        .tag { border: 1px solid var(--tag-color); padding: 2px 8px; border-radius: 2px; font-size: 0.6rem; color: var(--tag-color); margin-left: 12px; text-transform: uppercase; }
+
+        .team-info { max-height: 0; overflow: hidden; transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1); background: rgba(0,0,0,0.4); color: var(--text-dim); }
+        .team-card:hover .team-info { max-height: 1000px; padding: 35px; }
+
+        .gold-trophies { color: var(--gold); font-weight: 700; border-left: 3px solid var(--gold); padding-left: 15px; display: block; margin-bottom: 20px; font-size: 0.9rem; line-height: 1.4; }
+        h3 { color: #fff; font-family: 'Orbitron'; margin: 0 0 10px 0; letter-spacing: 1px; }
+        .roster-list { color: #fff; font-weight: 600; border-top: 1px solid #2d333b; padding-top: 15px; display: block; }
+        .fi { margin-left: 10px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-label">SYSTEM</div>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="teams.html">TEAMS</a></li>
+            <li><a href="majors.html">MAJORS</a></li>
+            <li><a href="players.html">PLAYERS</a></li>
+            <li><a href="records.html">RECORDS</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1 style="font-family: 'Orbitron'; letter-spacing: 3px; margin-bottom: 40px;">HLTV_RANKING // MARCH <span style="color:var(--accent-color)">2026</span></h1>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/Team_Vitality" target="_blank"><img src="logos/vitality.png" alt="Vitality" class="team-logo"></a>
+                    <span>1. Team Vitality <span class="tag" style="--tag-color: #ffcc00;">Major King</span></span>
+                </div>
+                <span>FRANCE <span class="fi fi-fr"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>Team Vitality</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): IEM Katowice 2025, ESL Pro League S21, BLAST Open Lison 2025, IEM Melbourne 2025, BLAST Rivals Season 1 2025, IEM Dallas 2025, BLAST.tv Austin Major 2025, ESL Pro League S22, StarLadder Budapest Major 2025, IEM Krakow 2026, PGL Cluj-Napoca 2026.</span>
+                <p>Доминирующая сила мирового CS. Взяли 2 Мажора в 2025 году.</p>
+                <span class="roster-list">Состав: apEX, ropz, ZywOo, flameZ, mezii</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/Team_Falcons" target="_blank"><img src="logos/falcons.png" alt="Falcons" class="team-logo"></a>
+                    <span>2. Team Falcons <span class="tag" style="--tag-color: #00ff4c;">Superteam</span></span>
+                </div>
+                <span>SAUDI ARABIA <span class="fi fi-sa"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>Team Falcons</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): PGL Bucharest 2025.</span>
+                <p>Проект с неограниченным бюджетом и звездным дуэтом NiKo + m0NESY.</p>
+                <span class="roster-list">Состав: NiKo, m0NESY, TeSeS, kyxsan, kyousuke</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/Team_Spirit" target="_blank"><img src="logos/spirit.png" alt="Spirit" class="team-logo"></a>
+                    <span>3. Team Spirit <span class="tag" style="--tag-color: #ffffff;">The Dragon</span></span>
+                </div>
+                <span>SERBIA / CIS <span class="fi fi-rs"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>Team Spirit</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): BLAST Bounty Season 1 2025, PGL Astana 2025, IEM Cologne 2025, BLAST Bounty Season 2 2025.</span>
+                <p>Команда феноменального donk, продолжающая держать высочайший темп игры.</p>
+                <span class="roster-list">Состав: magixx, sh1ro, tN1r, zont1x, donk</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/Natus_Vincere" target="_blank"><img src="logos/navi.png" alt="NAVI" class="team-logo"></a>
+                    <span>4. Natus Vincere <span class="tag" style="--tag-color: #deff00;">Born to Win</span></span>
+                </div>
+                <span>UKRAINE <span class="fi fi-ua"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>Natus Vincere</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): Отсутствует.</span>
+                <p>Стабильный топ-участник плей-офф всех крупнейших турниров.</p>
+                <span class="roster-list">Состав: Aleksib, iM, b1t, makazze, w0nderful</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/The_MongolZ" target="_blank"><img src="logos/mongolz.png" alt="MongolZ" class="team-logo"></a>
+                    <span>5. The MongolZ <span class="tag" style="--tag-color: #d4af37;">Pride of Asia</span></span>
+                </div>
+                <span>MONGOLIA <span class="fi fi-mn"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>The MongolZ</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): Esports World Cup 2025.</span>
+                <p>Главная сенсация азиатского региона, закрепившаяся в элите.</p>
+                <span class="roster-list">Состав: bLitz, Techno, cobrazera, mzinho, 910</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/Aurora_Gaming" target="_blank"><img src="logos/aurora.png" alt="Aurora" class="team-logo"></a>
+                    <span>6. Aurora Gaming <span class="tag" style="--tag-color: #00d4ff;">New Force</span></span>
+                </div>
+                <span>SERBIA / CIS <span class="fi fi-rs"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>Aurora Gaming</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): PGL Masters Bucharest 2025.</span>
+                <p>Команда с турецким супер-костяком, показывающая невероятную огневую мощь.</p>
+                <span class="roster-list">Состав: MAJ3R, XANTARES, woxic, Wicadia, soulfly</span>
+            </div>
+        </div>
+
+        <div class="team-card">
+            <div class="team-header">
+                <div class="header-left">
+                    <a href="https://ru.wikipedia.org/wiki/G2_Esports" target="_blank"><img src="logos/g2.png" alt="G2" class="team-logo"></a>
+                    <span>7. G2 Esports <span class="tag" style="--tag-color: #ff0040;">Samurai</span></span>
+                </div>
+                <span>GERMANY <span class="fi fi-de"></span></span>
+            </div>
+            <div class="team-info">
+                <h3>G2 Esports</h3>
+                <span class="gold-trophies">ЗОЛОТО (2025-2026): BLAST Open London 2025.</span>
+                <p>Непредсказуемые и опасные G2 продолжают борьбу за трофеи в обновленном составе.</p>
+                <span class="roster-list">Состав: Snax, huNter-, malbsMd, HeavyGod, MATYS</span>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.team-card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${(index * 0.15) + 0.5}s`;
+            });
+        });
+    </script>
+</body>
+</html>
